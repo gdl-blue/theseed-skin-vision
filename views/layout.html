@@ -1,0 +1,481 @@
+<div class=nav-wrapper>
+	<nav class="navbar navbar-dark">
+		<a class=navbar-brand href="/">
+			<img src="{{ config.getString('wiki.logo_url', '') }}" />
+			{{ config.getString('wiki.site_name', 'Wiki') }}
+		</a>
+		<ul class="nav navbar-nav">
+			<li class=nav-item>
+				<a class=nav-link href="/RecentChanges">
+					<span class="fa fa-solid fa-compass"></span>
+					<span class=hide-title>최근 변경</span>
+				</a>
+			</li>
+			<li class=nav-item>
+				<a class=nav-link href="/RecentDiscuss">
+					<span class="fa fa-solid fa-comment-dots"></span>
+					<span class=hide-title>최근 토론</span>
+				</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle dropdown-toggle-fix" href="#" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+					<span class="fa fa-cogs"></span>
+					<span class=hide-title>특수 기능</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right nav-dropdown-menu" role=menu>
+					<a class=dropdown-item href="/Upload">
+						<span class="fa fa-upload"></span>
+						<span class=hide-title>파일 올리기</span>
+					</a>
+					<div class=dropdown-divider></div>
+					<a class=dropdown-item href="/NeededPages">
+						<span class="fa fa-chain-broken"></span>
+						<span class=hide-title>작성이 필요한 문서</span>
+					</a>
+					<a class=dropdown-item href="/OrphanedPages">
+						<span class="fa-solid fa-face-sad-cry"></span>
+						<span class=hide-title>고립된 문서</span>
+					</a>
+					<a class=dropdown-item href="/UncategorizedPages">
+						<span class="fa-solid fa-filter-circle-xmark"></span>
+						<span class=hide-title>분류가 되지 않은 문서</span>
+					</a>
+					<a class=dropdown-item href="/LongestPages">
+						<span class="fa fa-solid fa-anchor-circle-check"></span>
+						<span class=hide-title>내용이 긴 문서</span>
+					</a>
+					<a class=dropdown-item href="/ShortestPages">
+						<span class="fa fa-solid fa-seedling"></span>
+						<span class=hide-title>내용이 짧은 문서</span>
+					</a>
+					<a class=dropdown-item href="/OldestPages">
+						<span class="fa fa-solid fa-business-time"></span>
+						<span class=hide-title>편집된 지 오래된 문서</span>
+					</a>
+					<a class=dropdown-item href="/BlockHistory">
+						<span class="fa-solid fa-user-xmark"></span>
+						<span class=hide-title>차단 내역</span>
+					</a>
+					<a class=dropdown-item href="/RandomPage">
+						<span class="fa-solid fa-shuffle"></span>
+						<span class=hide-title>RandomPage</span>
+					</a>
+					<a class=dropdown-item href="/License">
+						<span class="fa-solid fa-tags"></span>
+						<span class=hide-title>라이선스</span>
+					</a>
+					{% if perms.has('ipacl') || perms.has('suspend_account') || perms.has('grant') || perms.has('login_history') || perms.has('config') %}
+					<hr class=dropdown-divider />
+					{% endif %}
+					{% if perms.has('ipacl') %}
+					<a class=dropdown-item href="/admin/ipacl">
+						<span class="fa-solid fa-wand-sparkles"></span>
+						<span class=icon-title>[ADMIN] IPACL</span>
+					</a>
+					{% endif %}
+					{% if perms.has('suspend_account') %}
+					<a class=dropdown-item href="/admin/suspend_account">
+						<span class="fa-solid fa-wand-sparkles"></span>
+						<span class=icon-title>[ADMIN] 사용자 차단</span>
+					</a>
+					{% endif %}
+					{% if perms.has('grant') %}
+					<a class=dropdown-item href="/admin/grant">
+						<span class="fa-solid fa-wand-sparkles"></span>
+						<span class=icon-title>[ADMIN] 권한</span>
+					</a>
+					{% endif %}
+					{% if perms.has('config') %}
+					<a class=dropdown-item href="/admin/config">
+						<span class="fa-solid fa-wand-sparkles"></span>
+						<span class=icon-title>[ADMIN] Config</span>
+					</a>
+					{% endif %}
+					{% if perms.has('login_history') %}
+					<a class=dropdown-item href="/admin/login_history">
+						<span class="fa-solid fa-wand-sparkles"></span>
+						<span class=icon-title>[ADMIN] 로그인 내역</span>
+					</a>
+					{% endif %}
+				</div>
+			</li>
+		</ul>
+		<div class="navbar-login">
+			<div class="dropdown login-menu">
+				<a class=dropdown-toggle type=button id=login-menu data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+					{% if member %}
+					<img class=profile-img src="{{ member|avatar_url }}" />
+					{% else %}
+					<span class="fa fa-user-large"></span>
+					{% endif %}
+				</a>
+				<div aria-labelledby=login-menu class="dropdown-menu dropdown-menu-right login-dropdown-menu">
+					<div class=login-dropdown-name>
+						<div class=login-dropdown-name1>
+							{% if member %}
+							{{ member.username }}
+							{% else %}
+							{{ req_ip }}
+							{% endif %}
+						</div>
+						<div class=login-dropdown-name2>
+							{% if member %}
+							{% if perms.has('developer') %}
+							Owner
+							{% elseif perms.has('admin') %}
+							Admin
+							{% else %}
+							Member
+							{% endif %}
+							{% else %}
+							IP User
+							{% endif %}
+						</div>
+					</div>
+					<div class=dropdown-divider></div>
+					<a class=dropdown-item href="/settings">
+						<span class=hide-title>스킨 설정</span>
+					</a>
+					<div class=dropdown-divider></div>
+					{% if member %}
+					<a class=dropdown-item href="/member/mypage">
+						<span class=hide-title>내 정보</span>
+					</a>
+					<a class=dropdown-item href="/w/{{ member.username | encode_userdoc }}">
+						<span class=hide-title>내 사용자 문서</span>
+					</a>
+					{% endif %}
+					<div class=dropdown-divider></div>
+					<a class=dropdown-item href="/contribution/{% if member %}author{% else %}ip{% endif %}/{% if member %}{{ member.username|url_encode }}{% else %}{{ req_ip }}{% endif %}/document">
+						<span class=hide-title>내 문서 기여 목록</span>
+					</a>
+					<a class=dropdown-item href="/contribution/{% if member %}author{% else %}ip{% endif %}/{% if member %}{{ member.username|url_encode }}{% else %}{{ req_ip }}{% endif %}/discuss">
+						<span class=hide-title>내 토론 기여 목록</span>
+					</a>
+					{% if member %}
+					<a class=dropdown-item href="/member/starred_documents">
+						<span class=hide-title>내 문서함</span>
+					</a>
+					{% endif %}
+					<div class=dropdown-divider></div>
+					{% if member %}
+					<a class=dropdown-item href="/member/logout">
+						<span class=hide-title>로그아웃</span>
+					</a>
+					{% else %}
+					<a class=dropdown-item href="/member/login">
+						<span class=hide-title>로그인</span>
+					</a>
+					<a class=dropdown-item href="/member/signup">
+						<span class=hide-title>계정 만들기</span>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<form id=searchform class=form-inline>
+			<div class=input-group>
+				<a class="btn btn-secondary" id=navbar-random href="/random">
+					<i class="fa fa-random"></i>
+				</a>
+				<input id=searchInput type=search name=search placeholder="검색하려면 여기에 입력하세요." accesskey=f class=form-control id=searchInput autocomplete=off />
+				<span class=input-group-btn>
+					<button type=button name=go value=view id=searchGoButton class="btn btn-secondary">
+						<span class="fa fa-solid fa-magnifying-glass"></span>
+					</button>
+					<button type=button name=fulltext value=search id=searchSearchButton class="btn btn-secondary">
+						<span class="fa fa-arrow-right"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+	</nav>
+</div>
+{% if config.getString('wiki.sitenotice', null) %}
+<div class=vision-top-notice-bg>
+	<div class=vision-top-notice>
+		{{ config.getString('wiki.sitenotice', '') }}
+	</div>
+</div>
+{% endif %}
+<div class=menu-buttons>
+	<a class=scroll-menu href="#sidebar">
+		<i class="fa fa-solid fa-bars"></i>
+	</a>
+</div>
+<div class=scroll-buttons>
+	<a class=scroll-toc href="#toc" id=scroll-button-toc>
+		<i class="fa fa-list-ul" aria-hidden=true></i>
+	</a><a class="scroll-button" href="#" id=scroll-button-left>
+		<i class="fa fa-angle-up" aria-hidden=true></i>
+	</a><a class="scroll-bottom" href="#powered" id=scroll-button-right>
+		<i class="fa fa-angle-down" aria-hidden=true></i>
+	</a>
+</div>
+<div class=content-wrapper>
+	<div class="container-fluid vision-content">
+		<div class=vision-content-header>
+			<div class=content-tools>
+				<div class=btn-group role=group aria-label=content-tools>
+					{% if rev %}
+					<a href="/w/{{ document|encode_doc }}?rev={{ rev }}" class="btn btn-secondary tools-btn{% if skinInfo.viewName == 'wiki' %} selected{% endif %}">
+						보기
+					</a><a href="/raw/{{ document|encode_doc }}?rev={{ rev }}" class="btn btn-secondary tools-btn{% if skinInfo.viewName == 'raw' %} selected{% endif %}">
+						RAW
+					</a><a href="/blame/{{ document|encode_doc }}?rev={{ rev }}" class="btn btn-secondary tools-btn{% if skinInfo.viewName == 'blame' %} selected{% endif %}">
+						Blame
+					</a><a href="/revert/{{ document|encode_doc }}?rev={{ rev }}" class="btn btn-secondary tools-btn{% if skinInfo.viewName == 'revert' %} selected{% endif %}">
+						되돌리기
+					</a>{% if rev != 1 %}<a href="/diff/{{ document|encode_doc }}?rev={{ rev }}&oldrev={{ parseInt(rev) - 1 }}" class="btn btn-secondary tools-btn{% if skinInfo.viewName == 'diff' %} selected{% endif %}">
+						비교
+					</a>{% endif %}
+					{% elseif skinInfo.viewName == 'wiki' || skinInfo.viewName == 'notfound' %}
+					<a href="/edit/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-code"></i>
+						편집
+					</a><a href="/discuss/{{ document|encode_doc }}" class="btn btn-secondary tools-btn"{% if discuss_progress %} id=topic_color{% endif %}>
+						<i class="fa-solid fa-comment"></i>
+						토론
+					</a><a href="/history/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-calendar"></i>
+						역사
+					</a><a href="/acl/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-file-shield"></i>
+						ACL
+					</a>
+					{% elseif skinInfo.viewName == 'edit' %}
+					<a href="/move/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-truck-moving"></i>
+						편집
+					</a><a href="/delete/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-trash"></i>
+						토론
+					</a><a href="/history/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-calendar"></i>
+						역사
+					</a><a href="/acl/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-file-shield"></i>
+						ACL
+					</a>
+					{% elseif skinInfo.viewName == 'history' %}
+					<a href="/edit/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-code"></i>
+						편집
+					</a><a href="/discuss/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-comment"></i>
+						토론
+					</a><a href="/acl/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-file-shield"></i>
+						ACL
+					</a>
+					{% elseif skinInfo.viewName == 'thread_list' %}
+					<a href="/edit/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-code"></i>
+						편집
+					</a><a href="/discuss/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-comment"></i>
+						토론
+					</a><a href="/acl/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-file-shield"></i>
+						ACL
+					</a>
+					{% elseif skinInfo.viewName == 'thread_list_close' || skinInfo.viewName == 'edit_request_list_close' %}
+					<a href="/discuss/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-comment"></i>
+						토론 목록
+					</a>
+					{% elseif skinInfo.viewName == 'thread' %}
+					<a href="/discuss/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-comment"></i>
+						토론 목록
+					</a><a href="/acl/{{ document|encode_doc }}" class="btn btn-secondary tools-btn">
+						<i class="fa-solid fa-file-shield"></i>
+						ACL
+					</a>
+					{% elseif skinInfo.viewName == 'error' %}
+					<a href="#" onclick="history.back(); return false;" class="btn btn btn-secondary tools-btn go-back">
+						<i class="fa-solid fa-circle-left"></i>
+						이전 화면
+					</a>
+					{% endif %}
+					
+					{% if skinInfo.viewName == 'wiki' || skinInfo.viewName == 'notfound' || rev %}
+					<button type=button class="btn btn-secondary tools-btn tool-more-btn" data-toggle=dropdown aria-expanded=false>
+						<i class="fa-solid fa-ellipsis-vertical"></i>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right" role=menu>
+						{% if skinInfo.viewName == 'wiki' || skinInfo.viewName == 'notfound' %}
+						<a class=dropdown-item href="/xref/{{ document|encode_doc }}">
+							<i class="fa-solid fa-anchor"></i>
+							역링크
+						</a>
+						{% if skinInfo.viewName == 'wiki' %}
+						<a class=dropdown-item href="/member/{% if starred %}un{% endif %}star/{{ document|encode_doc }}">
+							<i class="fa-{% if starred %}solid{% else %}regular{% endif %} fa-star"></i>
+							내 문서함{%if starred %}에서 제거{% else %}에 추가{% endif %} ({{ star_count }})
+						</a>
+						{% endif %}
+						{% if user %}
+						<a class=dropdown-item href="/contribution/author/{{ document.title|url_encode }}/document">
+							<i class="fa-solid fa-rectangle-list"></i>
+							기여 목록
+						</a>
+						{% endif %}
+						{% elseif rev %}
+						<a class=dropdown-item href="/history/{{ document|encode_doc }}">
+							<i class="fa-solid fa-calendar"></i>
+							문서 역사
+						</a>
+						{% endif %}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class=title>
+				<h1 id=main_title>
+					{% if document %}
+					{% if document.namespace != '문서' || document.forceShowNamespace %}
+					<a class=main_title_a href="/w/{{ document|encode_doc }}"><span class=wiki-document-namespace>{{ document.namespace }}:</span><span class=wiki-document-title>{{ document.title }}</span></a>
+					{% else %}
+					<a class=main_title_a href="/w/{{ document|encode_doc }}"><span class=wiki-document-title>{{ document.title }}</span></a>
+					{% endif %}
+					{% else %}
+					{{ skinInfo.title }}
+					{% endif %}
+					
+					{% if skinInfo.viewName == 'edit' %}
+					<sub>(편집)</sub>
+					{% elseif skinInfo.viewName == 'thread' %}
+					<sub>(토론)</sub>
+					{% elseif skinInfo.viewName == 'thread_list' %}
+					<sub>(토론)</sub>
+					{% elseif skinInfo.viewName == 'thread_list_close' %}
+					<sub>(닫힌 토론)</sub>
+					{% elseif skinInfo.viewName == 'edit_request_list_close' %}
+					<sub>(닫힌 편집 요청)</sub>
+					{% elseif skinInfo.viewName == 'xref' %}
+					<sub>(역링크)</sub>
+					{% elseif skinInfo.viewName == 'history' %}
+					<sub>(문서 역사)</sub>
+					{% elseif skinInfo.viewName == 'move' %}
+					<sub>(이동)</sub>
+					{% elseif skinInfo.viewName == 'delete' %}
+					<sub>(삭제)</sub>
+					{% elseif skinInfo.viewName == 'diff' %}
+					<sub>(비교)</sub>
+					{% elseif skinInfo.viewName == 'acl' %}
+					<sub>(ACL)</sub>
+					{% elseif skinInfo.viewName == 'edit_request' %}
+					<sub>(편집 요청)</sub>
+					{% elseif skinInfo.viewName == 'new_edit_request' %}
+					<sub>(편집 요청)</sub>
+					{% elseif skinInfo.viewName == 'blame' %}
+					<sub>(r{{ rev }} Blame)</sub>
+					{% elseif skinInfo.viewName == 'raw' %}
+					<sub>(r{{ rev }} RAW)</sub>
+					{% elseif skinInfo.viewName == 'revert' %}
+					<sub>(r{{ rev }}로 되돌리기)</sub>
+					{% endif %}
+					{% if skinInfo.viewName == 'wiki' && rev %}
+					<sub>(r{{ rev }} 판)</sub>
+					{% endif %}
+				</h1>
+				{% if skinInfo.viewName == 'wiki' && !rev %}
+				<div class=last-edit>
+					최근 수정 시각: {{ date | to_date | localdate('Y-m-d H:i:s') }}
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<article class="vision-content-main wiki-article">
+			{% block content %}{% endblock %}
+		</article>
+	</div>
+	<aside class=vision-sidebar id=sidebar>
+		<div class=sidebar-0>
+			<a class=sidebar-0-title href="/w/{{ member.username | encode_userdoc }}">
+				<i class="fa fa-user-large"></i>
+				사용자
+				<i class="sidebar-angle fa-solid fa-angle-right"></i>
+			</a>
+			<div class=sidebar-0-account>
+				<div class=sidebar-0-profile>
+					{% if member %}
+					<img class=profile-img src="{{ member|avatar_url }}" />
+					{% else %}
+					<i class="fa fa-solid fa-circle-user"></i>
+					{% endif %}
+				</div>
+				<div class=sidebar-0-name>
+					<div id=sidebar-0-name1>
+						{% if member %}
+						{{ member.username }}
+						{% else %}
+						{{ req_ip }}
+						{% endif %}
+					</div>
+					<div id=sidebar-0-name2>
+						{% if member %}
+						{% if perms.has('developer') %}
+						Owner
+						{% elseif perms.has('admin') %}
+						Admin
+						{% else %}
+						Member
+						{% endif %}
+						{% else %}
+						IP User
+						{% endif %}
+					</div>
+					<div id=sidebar-0-name3></div>
+				</div>
+			</div>
+			<div class=sidebar-0-tool>
+				<a class="sidebar-0-item" href="/settings">
+					<i class="fa fa-solid fa-gears"></i>
+					스킨 설정
+				</a>
+				<a class="sidebar-0-item" href="/member/mypage">
+					<i class="fa fa-solid fa-pen-to-square"></i>
+					내 정보
+				</a>
+				<a class="sidebar-0-item" href="/member/starred_documents">
+					<i class="fa fa-solid fa-heart"></i>
+					내 문서함
+				</a>
+			</div>
+		</div>
+		<div class=sidebar-1>
+			<a class=sidebar-1-title href="/RecentChanges">
+				<i class="fa fa-solid fa-compass"></i>
+				최근 변경
+				<i class="sidebar-angle fa-solid fa-angle-right"></i>
+			</a>
+			<ul class=sidebar-1-list id=sidebar-1-list>
+				<li><span id=sidebar-1-item>[불러오는 중...]</span></li>
+			</ul>
+		</div>
+		{% if skinInfo.viewName == 'wiki' %}
+		<div class=sidebar-2 style="display: none; position: sticky; top: 10px;">
+			<a class=sidebar-2-title href="#toc">
+				<i class="fa-solid fa-list"></i>
+				목차
+				<i class="sidebar-angle fa-solid fa-angle-right"></i>
+			</a>
+			<ul class=sidebar-2-list id=sidebar-2-list></ul>
+		</div>
+		{% endif %}
+	</aside>
+</div>
+<footer class=vision-footer id=bottom>
+	{% if config.getString('wiki.copyright_text', '') %}
+	<p class=footer-p>{{ config.getString('wiki.copyright_text', '') }}</p>
+	{% endif %}
+	{% if config.getString('wiki.footer_text', '') %}
+	<p class=footer-p>{{ config.getString('wiki.footer_text', '') }}</p>
+	{% endif %}
+	<div class=footer-p id=powered>
+		Powered by <a href="https://github.com/openNAMU/openNAMU" target=_blank>openNAMU</a>, Designed by <a href="https://github.com/daol-project/Vision-skin" target=_blank>Vision</a>.
+	</div>
+</footer>
+<script type="text/javascript" src="/skins/vision/js/layout.js"></script>

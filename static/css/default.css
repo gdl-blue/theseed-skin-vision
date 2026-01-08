@@ -1,4 +1,4 @@
-:root {
+body.vision {
     --main-color: #696FFF;
     --menu-button-color: #696FFF;
     --sub-color: #A8ACFF;
@@ -9,7 +9,7 @@
     --text-color: #373a3c;
     --text-color-1: #000;
     --text-color-2: #666;
-    --a-color: dodgerblue;
+    --a-color: #0275d8;
     --nav-color: #fcfcfc;
     --bg-color-0: white;
     --bg-color-1: #fbfbfb;
@@ -21,21 +21,15 @@
 }
 
 ::-moz-selection {
-    background: var(--light-sub-color);
-    color: #fff;
- }
- ::selection {
-    background: var(--light-sub-color);
-    color: #fff;
- }
-
-/* 태그 수정 */
-* {
-    outline: none;
-
+	background: var(--light-sub-color);
+	color: #fff;
+}
+::selection {
+	background: var(--light-sub-color);
+	color: #fff;
 }
 
-input:hover, button:hover, select:hover {
+.form-control, .btn {
     transition: 0.3s;
 }
 
@@ -160,20 +154,8 @@ input[type=search] {
     appearance: none;
 }
 
-textarea {
-    width: 100%;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem;
-    border-radius: 0.8rem;
-}
-
 hr {
     border-top: 1px solid var(--border-color);
-}
-
-
-html input[type=button]:hover, html input[type=submit]:hover, button:hover, #mw-editform-cancel:hover {
-    background-color: #449d44;
 }
 
 label {
@@ -200,7 +182,6 @@ del, s, strike {
 .vision .content-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
     width: 100%;
 }
 /* 컨텐츠 넓이 수정 및 가운데 정렬 End */
@@ -811,8 +792,13 @@ div#sidebar-0-name3 {
     outline: 0;
 }
 
-a.btn:nth-child(3) {
-    border-radius: 0 1rem 1rem 0 !important;
+.content-tools a.btn:last-of-type {
+    border-top-right-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
+}
+.content-tools a.btn:first-of-type {
+    border-top-left-radius: 1rem !important;
+    border-bottom-left-radius: 1rem !important;
 }
 .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
     z-index: 3; /* 파폭, IE 테두리관련 버그 */
@@ -827,3 +813,7 @@ caption {
     caption-side: top;
 }
 /* 부트스트랩 커스텀 End*/
+
+body.vision {
+	overflow: visible;
+}

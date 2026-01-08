@@ -1,4 +1,4 @@
-:root {
+body.vision.dark {
     --main-color: #2d2f34;
     --sub-color: #383b40;
     --menu-button-color: #777;
@@ -19,14 +19,14 @@
     --topic-color: #325a56;
 }
 
-.opennamu_main textarea, .opennamu_main input, .opennamu_main select {
+body.vision.dark .form-control {
     background: var(--bg-color-0);
 }
 
-.opennamu_main button {
+body.vision.dark button, body.vision.dark .btn {
     background: var(--menu-button-color);
 }
 
-html, body {
+body.vision.dark {
     color: var(--text-color);
 }

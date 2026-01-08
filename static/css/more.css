@@ -1,6 +1,9 @@
 /* 문단 */
 h1, h2, h3, h4, h5, h6 {
     margin: 1.2em 0 0.6em;
+}
+
+.wiki-inner-content .wiki-heading {
     padding-bottom: 7px;
     border-bottom: 1px solid var(--sub-border-color);
 }
@@ -17,16 +20,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* 리스트 */ 
-.opennamu_main ul, .opennamu_main .opennamu_ul {
+ul.wiki-list {
     padding-left: 0.7rem;
 }
 
-.opennamu_main .opennamu_ul li, li {
+ul.wiki-list li {
     margin: 0.4em 0 0.4em 1em;
 }
 
 /* 인용문 */
-.opennamu_main blockquote {
+blockquote.wiki-quote {
 	background: var(--bg-color-1);
 	border: 1px var(--sub-border-color);
 	border-left: 5px solid var(--menu-button-color) !important;
@@ -72,7 +75,7 @@ label {
     font-weight: bold;
 }
 
-.opennamu_main td {
+.wiki-article .wiki-table td {
     padding: 5px 10px;
 	border: 1px solid var(--border-color);
 }
@@ -87,7 +90,6 @@ label {
 }
 
 html, body {
-    scroll-behavior: smooth;
 	letter-spacing: -0.5px;
 	color: var(--text-color);
 }
@@ -110,8 +112,7 @@ html, body {
 }
 
 /* 분류, 넘겨주기 알림 */
-#cate, .opennamu_category,
-.opennamu_main .opennamu_category {
+.wiki-article div.wiki-category {
     border: 1px solid var(--sub-border-color);
     border-radius: 15px;
     font-size: 0.9rem;
@@ -131,7 +132,6 @@ html, body {
     display: inline-block;
 	color: var(--text-color-2);
     width: 100%;
-	margin-bottom: 0;
 }
 
 .opennamu_main pre {
@@ -156,29 +156,49 @@ html, body {
 }
 
 /* 토론 디자인 */
-td.opennamu_comment {
+.res-wrapper {
+	margin-bottom: 30px;
+}
+
+@keyframes resload {
+	from {
+		opacity: .4;
+	} to {
+		opacity: .7;
+	}
+}
+
+.res-wrapper.res-loading {
+	opacity: .5;
+	animation: resload .5s infinite;
+}
+
+.res-wrapper .res {
 	max-width: 100%;
 	width: auto;
 	word-wrap: break-word;
 	position: relative;
+	display: table;
+	min-width: 450px;
 }
 
-td.opennamu_comment_color_default, td.opennamu_comment_color_green, td.opennamu_comment_color_gray, td.opennamu_comment_color_blue, td.opennamu_comment_color_red {
+.res-wrapper .res .r-head {
 	width: 100%;
-	padding: 7px 10px;
+	padding: 5px 10px;
     border-radius: 6px 6px 0px 0px;
 	border: 1px solid #888;
 	border-bottom: none;
 	display: inline-block;
+	background-color: #ddd;
 }
 
-td.opennamu_comment_color_gray {
-	border: 1px solid #888;
+.res-wrapper .res .r-head.first-author {
+	background-color: #abefab;
 }
 
-td.opennamu_comment_blind_not, td.opennamu_comment_data_main {
+.res-wrapper .res .r-body {
 	width: 100%;
-	padding: 13px;
+	padding: 8px 13px;
 	border-radius: 0px 0px 6px 6px;
 	border: 1px solid #888;
 	border-top: none;
@@ -188,32 +208,35 @@ td.opennamu_comment_blind_not, td.opennamu_comment_data_main {
 	overflow-y: auto;
 }
 
-.opennamu_comment_scroll {
-    max-height: none;
-    overflow: scroll;
-}
-
-td.opennamu_comment_blind {
-	width: 100%;
-	padding: 13px;
-	border-radius: 0px 0px 6px 6px;
-	border: 1px solid #888;
-	border-top: none;
+.res-wrapper .res .r-body.r-hidden-body {
 	background: #6b6b6b;
 	color: #fff;
 }
 
-@media screen and (min-width: 701px) {
-	.opennamu_main .opennamu_comment {
-		min-width: 400px;
-		width: auto;
-	}
+.res-wrapper .res.res-type-status .r-body {
+	background: #fec167
 }
 
 @media screen and (max-width: 700px) {
 	.opennamu_main .opennamu_comment {
+		min-width: 10px;
 		width: 100%;
 	}
+}
+
+.topic-discuss .more-box {
+	border: 1px solid gray;
+	background-color: #eee;
+	padding: 4px 8px;
+	margin-left: 12px;
+	margin-bottom: 33px;
+	display: inline-block;
+	margin-top: -5px;
+	border-radius: 6px;
+}
+
+.topic-discuss .more-box:hover {
+	background-color: #ddf;
 }
 
 /* 메뉴 버튼 디자인 */

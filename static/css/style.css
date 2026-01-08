@@ -11,24 +11,6 @@
     background: #f5f8fa;
 }
 
-select {
-    display: inline-block;
-    padding: 0.4rem 0.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: var(--text-color);
-    background-color: var(--bg-color-0);
-    background-image: none;
-    border: 1px solid var(--sub-border-color);
-    border-radius: 14px;
-}
-
-input {
-    border: 1px solid var(--border-color);
-    padding: 5px 8px;
-    border-radius: 16px;
-}
-
 .font-size-1 {
     font-size: 120%;
 }
@@ -140,8 +122,6 @@ div.scroll-buttons {
 
 h1, h2, h3, h4, h5, h6 {
     margin: 1.2em 0 0.8em;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--sub-border-color);
 }
 
 .navbar-brand {
@@ -149,52 +129,8 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 28px;
 }
 
-button {
-    padding: 0.4rem 0.8rem;
-    background: var(--bg-color-3);
-    border: none;
-    border-radius: 1rem;
-}
 
-button:hover {
-    background-color: var(--bg-color-1);
-}
-
-button#save, button#opennamu_save_button {
-    background-color: var(--menu-button-color);
-    color: white;
-    margin-right: 5px;
-}
-
-button#save:hover, button#opennamu_save_button:hover {
-    background-color: var(--menu-button-color);
-    opacity: 0.8;
-}
-
-button#preview, button#opennamu_preview_button {
-    background-color: var(--sub-color);
-    color: white;
-}
-
-button#preview:hover, button#opennamu_preview_button:hover {
-    background-color: var(--sub-color);
-    opacity: 0.8;
-    color: white;
-}
-
-button#come {
-    background-color: #f0ad4e;
-    color: white;
-    margin-left: 5px;
-}
-
-button#come:hover {
-    background-color: #ec971f;
-    color: white;
-}
-
-
-#cate, .opennamu_category {
+.wiki-category {
     border: 1px solid var(--sub-border-color);
     border-radius: 5px;
     font-size: .9rem;
@@ -203,6 +139,10 @@ button#come:hover {
     padding: 4px 4px 4px 6px;
     display: inline-block;
     width: 100%;
+}
+
+.wiki-article div.wiki-category ul li {
+	margin: 0;
 }
 
 #redirect {
@@ -249,4 +189,8 @@ th[rowspan], td[rowspan] {
 
 table {
     background-color: transparent;
+}
+
+#toc {
+	padding-left: 8px;
 }

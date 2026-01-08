@@ -1,0 +1,57 @@
+{
+	"override_views": [
+		"settings"
+	],
+	"static_files": [
+		"css/lib/bootstrap.min.css",
+		"css/lib/jquery-ui.css",
+		"css/lib/fontawesome-6.6.0.css",
+		"css/dark.css",
+		"css/default.css",
+		"css/default_mobile.css",
+		"css/more.css",
+		"css/style.css",
+		"js/lib/jquery-ui.min.js",
+		"js/lib/bootstrap.min.js",
+		"js/layout.js",
+		"js/skin_set.js",
+        "js/skin_set_do.js",
+        "js/theseed.js"
+	],
+	"auto_js_targets": {
+		"*": [
+			{
+				"path": "js/lib/jquery-ui.min.js"
+			},
+			{
+				"path": "js/lib/bootstrap.min.js"
+			},
+			{
+				"path": "js/theseed.js"
+			}
+		],
+		"settings": [
+			{
+				"path": "js/skin_set.js"
+			}
+		]
+	},
+	"auto_css_targets": {
+		"*": [
+			"css/lib/fontawesome-6.6.0.css",
+			"css/lib/bootstrap.min.css",
+			"css/lib/jquery-ui.css",
+            "css/default.css",
+			"css/default_mobile.css",
+			"css/style.css",
+			"css/more.css",
+			"css/dark.css"
+		]
+	},
+	"manual_file_targets": {
+	},
+	"body_classes": [
+		"vision"
+	],
+	"additional_heads": "<meta name=theme-color content=\"#696FFF\" /><meta name=viewport content=\"width=device-width, initial-scale=1, maximum-scale=1\" /><style id=ringo_add_style></style><script type=\"text/javascript\" src=\"/skins/vision/js/skin_set_do.js\"></script>"
+}
